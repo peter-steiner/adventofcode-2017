@@ -1,6 +1,7 @@
 #!/user/bin/env python3 -tt
 """
-Module documentation.
+Task:
+https://adventofcode.com/2017/day/1
 """
 
 # Imports
@@ -11,22 +12,14 @@ import os
 task="d-1"
 infile=task + ".input"
 
-# Class declarations
-
-# Function declarations
-
 def readInput():
-    with open('input\\' + infile) as f:
-        data = f.read()
-#        data="123123"
-#        print("This is the output of [" + infile + "]:\n" + data)
-    f.close()
+    with open('input\\' + infile) as file:
+        data = file.read()
+    file.close()
     return data
 
 def main():
-
-    data = readInput()
-    numbers = [int(n) for n in data]
+    numbers = [int(n) for n in readInput()]
     size = len(numbers)
     offset = int(len(numbers)/2)
     nums = numbers + numbers
@@ -37,14 +30,11 @@ def main():
         if index < size:
             a = nums[index]
             b = nums[index+offset]
-#            print(str(a) + str(b) + "--index: " + str(index) + " " + str(size))
             if a == b:
-#                print("Adding: " + str(a) + " " + str(b))
                 numbers_to_sum.append(a)             
         index = index+1
 
     print("sum: " + str(sum(numbers_to_sum)))
-    print("Finished executing: " + task)
     sys.exit(1)
 
 
