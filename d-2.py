@@ -1,17 +1,16 @@
 #!/user/bin/env python3 -tt
-import sys
-import os
 
 """
 Task:s
 https://adventofcode.com/2017/day/2
 """
 
+import sys
+import os
+
 # Global variables
 task="d-2"
 infile=task + ".input"
-
-# Class declarations
 
 def readInput():
     with open('input\\' + infile) as file:
@@ -19,21 +18,25 @@ def readInput():
     file.close()
     return data
 
-def main():
+def solve_a():
     sum = 0
     rows = readInput().split("\n")
     for row in rows:
         sequences = [int(s) for s in row.split()]
-        min_ = min(sequences)
-        max_ = max(sequences)
-        diff = max_ - min_
-        #print( str(max_) + "-" + str(min_) + "=" + str(diff))
+        diff = max(sequences) - min(sequences)
         sum = sum + diff
-
     print("Sum: " + str(sum))  
+
+def solve_b():
+    sum = 0
+    rows = readInput().split("\n")
+    for row in rows:
+        sequences = [int(s) for s in row.split()]
+   
+    print("Sum: " + str(sum))  
+
+if __name__ == '__main__':
+    solve_a()
+    
     print("Finished executing: " + task)
     sys.exit(1)
-
-# Main body
-if __name__ == '__main__':
-    main()
