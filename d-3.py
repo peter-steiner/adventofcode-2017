@@ -5,8 +5,8 @@ https://adventofcode.com/2017/day/3
 """
 
 import sys
-from libs.ulamspiral import UlamSpiral
-from libs.ulamspiral_modded import UlamSpiralModded
+from libs.ulamspiral_day3 import UlamSpiral
+from libs.ulamspiral_modded_day3 import UlamSpiralModded
 
 # Global variables
 task="d-3"
@@ -66,12 +66,20 @@ def solve_a():
     print("Solution A: ", steps) 
 
 def solve_b():
+    square_compare = 277678
+    square = 300000
 
-    print("Solution B: ")
+    spiral = UlamSpiralModded(square)
+    matrix = spiral.getRows()
+    print(spiral)
+    print("Solution B: ", "Look at the output... its a hack, but it has to do for now....")
 
 if __name__ == '__main__':
+    print("Starting task A")
     solve_a()
-#    solve_b()
+
+    print("Starting task B")
+    solve_b()
 
     print("Finished executing: " + task)
     sys.exit(1)
