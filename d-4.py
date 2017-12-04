@@ -17,9 +17,33 @@ def readInput():
     file.close()
     return data
 
+def parsePassPhrase(phrase):
+    matches = {}
+    for s in phrase.split():
+        hit = 1
+        if s in matches:
+            hit += matches[s]
+        matches[s] = hit
+    # print(matches) 
+    return matches
+
+def isValid(matches):
+    maxHits = max(list(matches.values()))
+    return maxHits < 2
+
 def solve_a():
 
-    print("Solution A: " + readInput())  
+    # input = "aa bb cc dd ee\naa bb cc dd aa\naa bb cc dd aaa"
+    input = readInput()
+    passphrases = input.split("\n")
+    
+    count = 0
+    for phrase in passphrases:
+        matches = parsePassPhrase(phrase)
+        if isValid(matches):
+            count += 1
+    
+    print("Solution A: ", count)  
 
 def solve_b():
 
@@ -28,7 +52,7 @@ def solve_b():
 
 if __name__ == '__main__':
     solve_a()
-    solve_b()
+    # solve_b()
 
     print("Finished executing: " + task)
     sys.exit(1)
