@@ -36,7 +36,7 @@ def solve_a():
     # input = "aa bb cc dd ee\naa bb cc dd aa\naa bb cc dd aaa"
     input = readInput()
     passphrases = input.split("\n")
-    
+
     count = 0
     for phrase in passphrases:
         matches = parsePassPhrase(phrase)
@@ -45,14 +45,33 @@ def solve_a():
     
     print("Solution A: ", count)  
 
-def solve_b():
+def sortAndMatchPhrases(phrase):
+    matches = {}
+    for s in phrase.split():
+        w = "".join(sorted(s))
+        hit = 1
+        if w in matches:
+            hit += matches[w]
+        matches[w] = hit
+    # print(matches) 
+    return matches
 
-    print("Solution B: " + readInput())  
+def solve_b():
+    input =  readInput()
+    passphrases = input.split("\n")
+
+    count = 0
+    for phrase in passphrases:
+        matches = sortAndMatchPhrases(phrase)
+        if isValid(matches):
+            count += 1
+    
+    print("Solution B: ", count)  
 
 
 if __name__ == '__main__':
     solve_a()
-    # solve_b()
+    solve_b()
 
     print("Finished executing: " + task)
     sys.exit(1)
