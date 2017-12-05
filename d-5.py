@@ -7,48 +7,34 @@ https://adventofcode.com/2017/day/5
 import sys
 
 # Global variables
-task="d-5.1"
+task="d-5"
 infile=task + ".input"
 
 movement = {"U": 0, "D": 0}
-visited = {}
+
 
 def readInput():
-    with open('input\\' + infile) as file:
+    with open('input/' + infile) as file:
         data = file.read()
     file.close()
     return data
 
-def jump(loc, steps, instructions):
-    if loc in visited:
-        visited[loc] += 1
-    else:
-        visited[loc] 
-    print("step to ", visited[steps])
-    return instructions[visited[steps]]
-
 
 def solve_a():
-    steps = 0
     instructions = [int(i) for i in readInput().split('\n')]
+ #   print(instructions)
 
-    jump_ = instructions[0]
-    loc = 0
-    i = 0
-    while i < 1:
-        print(jump_, " ", loc)
-        if loc > len(instructions):
-            i = 1 
-        steps += 1
-        jump_ = instructions[loc]
-        loc += jump_
-        instructions[loc] += 1
-        print(jump_)
-        
+    index = instructions[0]
+    iterations = 0
+    while index < len(instructions):
+        print(index)
+        steps = instructions[index]
+        instructions[index] = steps + 1;
+        index += steps
+        iterations +=1
 
-    print(instructions)
-
-    print("Solution A: ", steps) 
+    iterations +=1    
+    print("Solution A: ", iterations) 
 
 def solve_b():
     steps = 0
@@ -63,3 +49,4 @@ if __name__ == '__main__':
     print("Finished executing: " + task)
     sys.exit(1)
 
+#354120 wrong, to low
