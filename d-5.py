@@ -10,8 +10,6 @@ import sys
 task="d-5"
 infile=task + ".input"
 
-movement = {"U": 0, "D": 0}
-
 
 def readInput():
     with open('input/' + infile) as file:
@@ -22,31 +20,48 @@ def readInput():
 
 def solve_a():
     instructions = [int(i) for i in readInput().split('\n')]
- #   print(instructions)
 
-    index = instructions[0]
+    index = 0
     iterations = 0
     while index < len(instructions):
-        print(index)
         steps = instructions[index]
         instructions[index] = steps + 1;
         index += steps
         iterations +=1
 
-    iterations +=1    
     print("Solution A: ", iterations) 
 
 def solve_b():
     steps = 0
 
-    print("Solution B: ", steps)
+    instructions = [int(i) for i in readInput().split('\n')]
+    offsets = [0 for i in range(len(instructions))]
+    print(len(offsets), len(instructions))
+
+    index = 0
+    steps = 0
+    iterations = 0
+    while index < len(instructions):
+        op = 1
+        if instructions[index] >= 3:
+            op = -1 
+
+        steps = instructions[index]
+        instructions[index] = steps + op
+        index += steps
+        iterations +=1
+        
+    print("Solution B: ", iterations)
 
 if __name__ == '__main__':
 
     solve_a()
-    # solve_b()
+    solve_b()
 
     print("Finished executing: " + task)
     sys.exit(1)
 
-#354120 wrong, to low
+"""
+Solution A:  354121
+Solution B:  27283023
+"""
