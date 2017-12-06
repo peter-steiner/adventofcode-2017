@@ -19,9 +19,29 @@ def readInput():
 
 
 def solve_a():
-    input = readInput()
+    block = [int(i) for i in readInput().split()]
+    
+    findings = []
+    generated = ""
 
-    print("Solution A: ") 
+    i = 0
+    while True:
+        i += 1
+        redistr = max(block)
+        bank = block.index(redistr)
+        block[bank] = 0
+
+        items = len(block)
+        for k in range(1, redistr + 1):
+            next_block_pos = (bank + k)%(items)
+            block[next_block_pos] += 1
+        generated = "".join([str(i) for i in block])
+        if generated in findings:
+            print("MATCH FOUND", generated, findings.index(generated), findings[findings.index(generated)], len(findings)) 
+            break
+        findings.append(generated)
+            
+    print("Solution A: ", i) 
 
 def solve_b():
 
