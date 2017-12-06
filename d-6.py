@@ -17,12 +17,15 @@ def readInput():
     file.close()
     return input
 
+findAgain = ""
 
-def solve_a():
+def solve():
     block = [int(i) for i in readInput().split()]
     
     findings = []
     generated = ""
+    firstHit = True
+    firstFind = ""
 
     i = 0
     while True:
@@ -35,22 +38,25 @@ def solve_a():
         for k in range(1, redistr + 1):
             next_block_pos = (bank + k)%(items)
             block[next_block_pos] += 1
-        generated = "".join([str(i) for i in block])
+        generated = "".join([str(i) + "." for i in block])
         if generated in findings:
-            print("MATCH FOUND", generated, findings.index(generated), findings[findings.index(generated)], len(findings)) 
-            break
+            if firstHit:
+                i = 0
+                firstHit = False
+                firstFind = generated
+                print("A Solved", len(findings), generated) 
+            else:
+                if generated == firstFind:
+                    print("B Solved", i, generated, firstFind)
+                    break
         findings.append(generated)
+        
             
     print("Solution A: ", i) 
 
-def solve_b():
-
-    print("Solution B: ")
-
 if __name__ == '__main__':
 
-    solve_a()
-    solve_b()
+    solve()
 
     print("Finished executing: " + task)
     sys.exit(1)
