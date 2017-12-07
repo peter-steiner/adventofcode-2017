@@ -7,7 +7,7 @@ import sys
 import re
 
 # Global variables
-task="d-7.1"
+task="d-7"
 infile=task + ".input"
 
 with open('input/' + infile) as file:
@@ -15,34 +15,35 @@ with open('input/' + infile) as file:
 file.close()
 
 class Node:
+    parent = None
+
     def __init__(self, name, weight, linked):
         self.name = name
         self.weight = weight
         self.linked = linked
 
 def solve():
-    listOfnodes = [s.rstrip() for s in input.split("\n")]
-    prog = re.compile(r'(\w+) \((\d+)\)')
-    allLinked = []
+    raw_node_list = [s.rstrip() for s in input.split("\n")]
+    regex = re.compile(r'(\w+) \((\d+)\)')
+
     nodes = []
-    for n in listOfnodes:
-        pmn = prog.match(n)
+    linked_node_names = []
+    for n in raw_node_list:
+        pmn = regex.match(n)
         np = Node(pmn.group(1), pmn.group(2), []) 
         links = n.split("->")
         if len(links) > 1:
             np.linked = links[1].split(",")        
-
         nodes.append(np)
-        print(np.name, ":", np.weight, ":", np.linked)
-        allLinked.append(np.linked)
+#        print(np.name, ":", np.weight, ":", np.linked)
+        for link in np.linked:
+            linked_node_names.append(link)
 
-    print(allLinked)
-    print(":".join(allLinked))
     base = ""
-    for n in nodes:
-        if len(n.linked) > 1 and not n.name in ":".join(allLinked):
-            print("Should happen once", n.name)
-            base = n.name 
+    for node in nodes:
+        if len(node.linked) > 1 and not node.name in ":".join(linked_node_names):
+            print("Master node found", node.name)
+            base = node.name
 
     print("Solution A: ", base) 
 
