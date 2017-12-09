@@ -7,7 +7,6 @@ https://adventofcode.com/2017/day/4
 import sys
 import os
 
-# Global variables
 task="d-4"
 infile=task + ".input"
 
@@ -24,7 +23,6 @@ def parsePassPhrase(phrase):
         if s in matches:
             hit += matches[s]
         matches[s] = hit
-    # print(matches) 
     return matches
 
 def isValid(matches):
@@ -53,7 +51,6 @@ def sortAndMatchPhrases(phrase):
         if w in matches:
             hit += matches[w]
         matches[w] = hit
-    # print(matches) 
     return matches
 
 def solve_b():

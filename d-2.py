@@ -7,7 +7,6 @@ https://adventofcode.com/2017/day/2
 import sys
 import os
 
-# Global variables
 task="d-2"
 infile=task + ".input"
 
@@ -18,22 +17,22 @@ def readInput():
     return data
 
 def solve_a():
-    sum = 0
+    
     rows = readInput().split("\n")
+    sum = 0
     for row in rows:
         sequences = [int(s) for s in row.split()]
-        diff = max(sequences) - min(sequences)
-        sum = sum + diff
-    print("Solution A: " + str(sum))  
+        sum += max(sequences) - min(sequences)
+    print("Solution A:", sum)  
 
 def solve_b():
     sum = 0
     rows = readInput().split("\n")
     for row in rows:
         sequences = sorted([int(s) for s in row.split()])
-        sum = sum + findEven(0, sequences)
+        sum += findEven(0, sequences)
 
-    print("Solution B: " + str(sum))  
+    print("Solution B:", sum)  
 
 def findEven(index, numbers):
     divider = numbers[index]
@@ -45,9 +44,9 @@ def findEven(index, numbers):
     return findEven(index+1, numbers)
 
 if __name__ == '__main__':
-
+    
     solve_a()
     solve_b()
 
-    print("Finished executing: " + task)
+    print("Finished executing:", task)
     sys.exit(1)

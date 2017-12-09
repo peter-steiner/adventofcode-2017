@@ -10,13 +10,11 @@ import sys
 task="d-5"
 infile=task + ".input"
 
-
 def readInput():
     with open('input/' + infile) as file:
         data = file.read()
     file.close()
     return data
-
 
 def solve_a():
     instructions = [int(i) for i in readInput().split('\n')]
@@ -36,7 +34,7 @@ def solve_b():
 
     instructions = [int(i) for i in readInput().split('\n')]
     offsets = [0 for i in range(len(instructions))]
-    print(len(offsets), len(instructions))
+    # print(len(offsets), len(instructions))
 
     index = 0
     steps = 0
@@ -51,14 +49,13 @@ def solve_b():
         index += steps
         iterations +=1
         
-    print("Solution B: ", iterations)
+    print("Solution B:", iterations)
 
 if __name__ == '__main__':
-
     solve_a()
     solve_b()
 
-    print("Finished executing: " + task)
+    print("Finished executing:", task)
     sys.exit(1)
 
 """

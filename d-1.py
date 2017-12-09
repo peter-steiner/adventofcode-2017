@@ -32,7 +32,7 @@ def main():
             b = nums[index+offset]
             if a == b:
                 numbers_to_sum.append(a)             
-        index = index+1
+        index += 1
 
     print("sum: " + str(sum(numbers_to_sum)))
     sys.exit(1)
