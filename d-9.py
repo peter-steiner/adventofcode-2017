@@ -19,8 +19,6 @@ lvl_stack = Stack()
 def solveA():
     groups = 0
     raw_stream = input
-    # raw_stream = "{{<!!>},{<!!>},{<!!>},{<!!>}}"
-
 
     stream = re.sub(r'(\!.)', "", raw_stream)
     stream = re.sub(r'(<.*?>)', "", stream)
@@ -44,17 +42,20 @@ def solveA():
     print("Solution A: ", result) 
 
 def solveB():
-    groups = 0
     raw_stream = input
-    # raw_stream = "{{<!!>},{<!!>},{<!!>},{<!!>}}"
 
     stream = re.sub(r'(\!.)', "", raw_stream)
-    stream = re.sub(r'(<.*?>)', "", stream)
+    match_garbage = re.compile(r'(<.*?>)')
+    trash = match_garbage.findall(stream)
+    
+    trash_size = 0
+    for garbage in trash:
+        trash_size += len(garbage) -2
 
-    print("Solution B: ") 
-
+    print("Solution B: ", trash_size) 
 
 if __name__ == '__main__':
     solveA()
+    solveB()
     print("Finished executing: " + task)
     sys.exit(1)
