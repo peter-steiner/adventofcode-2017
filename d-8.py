@@ -1,6 +1,6 @@
 #!/user/bin/env python3 -tt
 """
-https://adventofcode.com/2017/day/7
+https://adventofcode.com/2017/day/8
 """
 
 import sys
