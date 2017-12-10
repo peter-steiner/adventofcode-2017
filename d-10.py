@@ -13,33 +13,39 @@ with open('input/' + infile) as file:
     input = file.read()
 file.close()
 
+def getSubList(position, length, hash_arr):
+    hash_size = len(hash_arr)
+    circular_arr = hash_arr + hash_arr
+    pos_from = position%hash_size
+    pos_to = pos_from+length
+    sub_list = circular_arr[pos_from:pos_to]
+    return sub_list
+
+def reverse(list):
+    return list[::-1]
+
+def substituteArray(position, hash_arr, sub_list):
+    hash_size = len(hash_arr)
+    i = 0
+    while i < len(sub_list):
+        substitute_pos = (position + i)%hash_size 
+        hash_arr[substitute_pos] = sub_list[i]
+        i += 1
+    return hash_arr
+   
 def solveA():
-    # input = "3, 4, 1, 5"
-    lengths = [int(s.rstrip()) for s in input.split(",")]
+    # input = "3,4,1,5"
+    # list_size = 5
     list_size = 256
+    lengths = [int(s.rstrip()) for s in input.split(",")]
     hash_arr = list(range(list_size))
+
     position = 0
     skip = 0
-
     for length in lengths:
-        # cut array
-        # pos + length-1
-        # reverse array
-        hash_size = len(hash_arr)
-        # print(hash_arr, length, skip, position)
-        circular_arr = hash_arr + hash_arr
-
-        pos_from = position%hash_size
-        pos_to = pos_from+length
-        sub_list = circular_arr[pos_from:pos_to]
-        reversed_sub_list = sub_list[::-1]
-
-        i = 0
-        while i < len(reversed_sub_list):
-            substitute_pos = (position + i)%hash_size 
-            hash_arr[substitute_pos] = reversed_sub_list[i]
-            i += 1
-        position += (length + skip)%hash_size
+        sub_list = reverse(getSubList(position, length, hash_arr))
+        hash_arr = substituteArray(position, hash_arr, sub_list)
+        position += (length + skip)%len(hash_arr)
         skip += 1
 
     result = hash_arr[0]*hash_arr[1]
