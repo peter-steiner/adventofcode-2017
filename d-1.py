@@ -13,7 +13,7 @@ task="d-1"
 infile=task + ".input"
 
 def readInput():
-    with open('input\\' + infile) as file:
+    with open('input/' + infile) as file:
         data = file.read()
     file.close()
     return data
@@ -34,7 +34,7 @@ def main():
                 numbers_to_sum.append(a)             
         index += 1
 
-    print("sum: " + str(sum(numbers_to_sum)))
+    print("sum: ", sum(numbers_to_sum))
     sys.exit(1)
 
 
