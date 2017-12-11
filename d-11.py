@@ -29,7 +29,7 @@ class Cord:
 
 navigation = {"nw":[0, -1, 1], "n":[-1, 0, 1], "ne":[-1, 1, 0], "sw": [1, -1, 0], "s":[1, 0, -1], "se":[0, 1,-1]}
 
-def solveA():
+def solve():
     
     directions = input.split(",")
     max_steps = 0
@@ -50,6 +50,6 @@ def solveA():
 
 if __name__ == '__main__':
     print("\n")
-    solveA()
+    solve()
     print("\n************\nFinished: " + task)
     sys.exit(1)
