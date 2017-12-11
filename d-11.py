@@ -13,61 +13,43 @@ with open('input/' + infile) as file:
     input = file.read()
 file.close()
 
-''' 
-ne,ne,ne        #3
-ne,ne,sw,sw     #0
-ne,ne,s,s       #2
-se,sw,se,sw,sw  #3
-'''
-
-class Node:
-    linked = None
-
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def __str__(self):
-        return "Node..."
-
 class Cord:
-    def __init__(self, x, y):
+    def __init__(self, x, y, z):
         self.x = x
         self.y = y
+        self.z = z
+
+    def move(self, dx, dy, dz):
+        self.x += dx
+        self.y += dy
+        self.z += dz
 
     def __str__(self):
-        return "" + self.x + ", " + self.y
+        return "{0}, {1}, {2}".format(self.x, self.y, self.z)
 
-navigation = {"nw":[-1, 1], "n":[0, 2], "ne":[1, 1], "sw": [-1, 1], "s":[0, -2], "se":[1,-1]}
-
-max_depth = 0
-
-def traverse_hex_grid(depth, cordinate, from_dir):
-        cord = Cord(cordinate.x + from_dir.x, cordinate.y + from_dir.y)
-        if depth == max_depth:
-            return
-        for next_dir in navigation:
-            (x, y) = next_dir.value()
-            traverse_hex_grid(depth + 1, cord, Cord(x, y))
+navigation = {"nw":[0, -1, 1], "n":[-1, 0, 1], "ne":[-1, 1, 0], "sw": [1, -1, 0], "s":[1, 0, -1], "se":[0, 1,-1]}
 
 def solveA():
     
-    steps = 0
-    input = "se,sw,se,sw,sw"
     directions = input.split(",")
-    print(directions)
+    max_steps = 0
+
+    cord = Cord(0, 0, 0)
     for dir in directions:
-        print(navigation.get(dir))
+        dist = max(cord.x, cord.y, cord.z)
+        if dist > max_steps:
+            max_steps = dist
 
-    print("A: ", steps) 
-
-def solveB():
-    steps = 0
-
-    print("B: ", steps)
+        dx, dy, dz = navigation.get(dir)
+        cord.move(dx, dy, dz)
+    
+    distance = max(cord.x, cord.y, cord.z)
+    # print(cord)
+    print("A shortest path", distance)
+    print("Max steps distance", max_steps)
 
 if __name__ == '__main__':
+    print("\n")
     solveA()
-    solveB()
-    print("Finished executing: " + task)
+    print("\n************\nFinished: " + task)
     sys.exit(1)
