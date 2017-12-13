@@ -34,14 +34,13 @@ def severityB(pos, scanner_pos, layer):
 
 def scannerPositionForLayer(pos, layer):
     p=0
+    last_index = len(layer)-1
+    steps = pos % (last_index*2)
     dir = 1
-    for i in range(pos):
-        if p + 1 > len(layer) - 1:
-            dir *= -1 
-        if dir < 0 and p == 0:
-            dir *= -1 
+    for i in range(steps):
+        if p + 1 > last_index:
+            dir *= -1
         p += dir
-    # print(pos, p)
     return p
 
 def solveB():
@@ -55,16 +54,15 @@ def solveB():
 
     delay = 0
     while True:
+        # if delay%10000 == 0:
+        #     print("Progress", delay)
         sum_severity = 0
         for pos in range(max_depth+1):        
-            # print("Picoseconds", pos + delay)
-            # if pos > 0:
             scan_count = pos + delay
             layer = layers_dict.get(pos)
             if layer:
                 scanner_pos = scannerPositionForLayer(scan_count, layer)
                 sev = severityB(pos, scanner_pos, layer)
-                # print(scanner_pos, len(layer), sev)
                 sum_severity += sev
                 if sev > 0:
                     break
@@ -98,7 +96,7 @@ def solveA():
 
 if __name__ == '__main__':
     print("\n")
-    # solveA()
+    solveA()
     solveB()
 
     print("\n************\nFinished: " + task)
