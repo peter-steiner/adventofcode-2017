@@ -31,16 +31,24 @@ def test_text_tobit():
     print("test e", bin_)
     bin_ = text_to_bits("f")
     print("test f", bin_)
+    bin_ = text_to_bits("a")
+    print("test a", bin_)
 
 def solveA():
-    input = "a0c2017..."
+    base = "flqrgnkx-0"
 
     knot_hash = Knot_hash()
-    knot_h = knot_hash.generate(input)
-    for v in list(knot_h):
-        bin_ = text_to_bits(v)
-        print(bin_)
+    rows = []
+    for i in range(128):
+        knot_h = knot_hash.generate(base + "-" + str(i))
+        row_parts = []
+        for v in list(knot_h):
+            row_parts.append(text_to_bits(v))
+        rows.append("".join(str(b) for b in row_parts))
 
+    for r in rows:
+        
+    print(row_parts)
     print("a knot", knot_h)
     # print("a", "asbit", row, len(row))
 
