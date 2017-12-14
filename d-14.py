@@ -39,10 +39,27 @@ def solveA():
     print("A:", sum)
 
 
+def solveB():
+    base = "vbqugkhl"
+
+    knot_hash = Knot_hash()
+    rows = []
+    for i in range(128):
+        knot_h = knot_hash.generate(base + "-" + str(i))
+#        print(base + "-" + str(i))
+        row_parts = []
+        row_bin = []
+        for v in list(knot_h):
+            row_parts.append(text_to_bits(v))
+        row_bin += [[i for i in b.split()] for b in row_parts]
+        print(row_bin)
+
+    print("B:")
+
 if __name__ == '__main__':
     print("\n")
     solveA()
-#    solveB()
+    solveB()
 
     print("\n************\nFinished: " + task)
     sys.exit(1)
