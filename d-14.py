@@ -26,26 +26,23 @@ def solveA():
     base = "vbqugkhl"
 
     knot_hash = Knot_hash()
-    rows = []
+    sum = 0
     for i in range(128):
         knot_h = knot_hash.generate(base + "-" + str(i))
-#        print(base + "-" + str(i))
         row_parts = []
-        row_bin = []
+        row = ""
         for v in list(knot_h):
             row_parts.append(text_to_bits(v))
-#        print(row_parts)
-        rows.append("".join(str(b) for b in row_parts))
+        row += "".join(str(b) for b in row_parts)
+        sum += row.count("1")
 
-    sum = 0
-    for r in rows:
-        sum += r.count("1")
     print("A:", sum)
+
 
 if __name__ == '__main__':
     print("\n")
     solveA()
-    solveB()
+#    solveB()
 
     print("\n************\nFinished: " + task)
     sys.exit(1)
