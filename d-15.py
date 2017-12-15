@@ -13,10 +13,16 @@ A = 0
 B = 1 
 factor = [16807, 48271]
 gen = [512, 191]
-gen = [65, 8921]
+# gen = [65, 8921]
 
 def solveB():
-
+    i = 0
+    while True:
+        i += 1
+        l = list("{0:b}".format(i))
+        if len(l) == 17:
+            print(i, l)
+            break
     print("B")
 
 def solveA():
@@ -26,6 +32,8 @@ def solveA():
     hits = 0
     while i < 40000000:
     # while i < 6:
+        if i%1000000 == 0:
+            print("Progress: ", i)
 
         gen_a = gen[A] * factor[A] % 2147483647
         gen_b = gen[B] * factor[B] % 2147483647
@@ -34,34 +42,30 @@ def solveA():
         len_a = len(bin_list_a)
         bin_list_b = list("{0:b}".format(gen_b))
         len_b = len(bin_list_b)
-        # print(gen_a, gen_b)
-        # seq_a = "".join(str(i) for i in bin_list_a[len_a-16:len_a])
-        # seq_b = "".join(str(i) for i in bin_list_b[len_b-16:len_b])
-        seq_a = bin_list_a[len_a-16:len_a]
-        seq_b = bin_list_b[len_b-16:len_b]
-        for i in range(16):
-            if len(seq_a) < 16 or len(seq_b) < 16:
+
+        seq_a = bin_list_a[::-1]
+        seq_b = bin_list_b[::-1]
+        for n in range(16):
+            a = seq_a[n] if n < len(seq_a) else 0 
+            b = seq_b[n] if n < len(seq_b) else 0 
+            if a != b:
                 break
-            if seq_a[i] != seq_b[i]:
-                break
-            if i == 15:
+            if n == 15:
                 hits += 1
 
         # print("*****", len(seq_a))
         # print(seq_a)
         # print(seq_b)
-        # if seq_a == seq_b:
-            # print("hit at", i)
 
-        gen = [gen_a, gen_b]
         i += 1
+        gen = [gen_a, gen_b]
 
     print("A", hits)
 
 if __name__ == '__main__':
     print("\n")
     solveA()
-    solveB()
+    # solveB()
 
     print("\n************\nFinished: " + task)
     sys.exit(1)
