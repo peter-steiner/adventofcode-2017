@@ -72,8 +72,32 @@ def solveA():
     print("A:", df)
 
 def solveB():
+    cmds = input.split(",")
 
-    print("B:")
+    dance_floor = []
+    for i in range(16):
+        dance_floor.append(chr(ascii_base + i))
+    
+    start = "".join(s for s in dance_floor)
+
+    i = 0
+    while True:
+        for cmd in cmds:
+            dance_floor = execute(cmd, dance_floor)
+        df = "".join(s for s in dance_floor)
+        i += 1
+        if df == start:
+            print("start state", i, 1000000000%i)
+            break 
+
+    n = 0
+    while n < 1000000000%i:
+        for cmd in cmds:
+            dance_floor = execute(cmd, dance_floor)
+        n += 1
+
+    df = "".join(s for s in dance_floor)
+    print("B:", df)
 
 if __name__ == '__main__':
     print("\n")
