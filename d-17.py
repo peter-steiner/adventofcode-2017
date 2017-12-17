@@ -9,36 +9,49 @@ import re
 task="d-17"
 infile=task + ".input"
 
-steps = 354
 buffer = [0]
+steps = 354
 
 def solveA():
-
     global buffer
-    dance_floor = []
     target_val = 2017
 
     i = 0
     index = 0
     while True:
-        index = (index + steps)%len(buffer) + 1
         i += 1
+        index = (index + steps)%i + 1
         buffer.insert(index , i)
         if i == target_val + 1:
             break
-
-    result = buffer[buffer.index(target_val) + 1]
-    print("Next value:", result)
+    
+    index = buffer.index(target_val) + 1 if buffer.index(target_val) + 1 < len(buffer) else 0
+    result = buffer[index]
+    print("A:", result)
 
 def solveB():
-
-    result = 1337
+    global buffer
+    target_val = 50000000
+    
+    i = 0
+    index = 0
+    while True:
+        i += 1
+        index = (index + steps)%i + 1
+        if index < 10 or index < buffer.index(0) + 2:
+            buffer.insert(index , i)
+        if i == target_val + 1:
+            break
+        
+    find = 0
+    index = buffer.index(find) + 1 if buffer.index(find) + 1 < len(buffer) else 0
+    result = buffer[index]
     print("B:", result)
 
 if __name__ == '__main__':
     print("\n")
     solveA()
-    # solveB()
+    solveB()
 
     print("\n************\nFinished: " + task)
     sys.exit(1)
