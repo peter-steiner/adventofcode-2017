@@ -150,11 +150,11 @@ def solveB():
     indexA = 0
     indexB = 0
     print("Execute:")
-#    while True:
-#        indexA = parseCmd(CMDS[indexA], CMDS, indexA)
-#        indexB = parseCmd(CMDS[indexB], CMDS, indexB)
-#        if index == -1:
-#            break
+    while True:
+        indexA = parseCmd(CMDS[indexA], CMDS, indexA)
+        indexB = parseCmd(CMDS[indexB], CMDS, indexB)
+        if index == -1:
+            break
 
     print("B:")
 
