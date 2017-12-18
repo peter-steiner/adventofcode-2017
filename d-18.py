@@ -17,6 +17,17 @@ register = {}
 
 VALUE = 0
 LAST_FREQ = 1
+CMDS = []
+AQ = []
+BQ = []
+
+def initRegistry():
+    raw_cmds = input.split("\n")
+    for raw_cmd in raw_cmds:
+        CMDS.append(raw_cmd)
+        r = raw_cmd.split(" ")[1]
+        if not r in register.keys():
+            register[r] = [0, 0]
 
 def RepresentsInt(s):
     try: 
@@ -31,7 +42,6 @@ def snd(cmd):
 
 def set_(cmd):
     r = register[cmd[VALUE]]
-    print(cmd, r)
     if RepresentsInt(cmd[1]):
         r[VALUE] = int(cmd[1])
         register[cmd[VALUE]] = [r[VALUE], r[1]] 
@@ -73,10 +83,10 @@ def mod(cmd):
 def rcv(cmd):
     r = register[cmd[VALUE]]
     if r[VALUE] > 0:
-        print("recover", r[1])
         r[VALUE] = r[1]
         register[cmd[VALUE]] = [r[VALUE], r[1]] 
         if r[1] > 0:
+            print("recover", r[1])
             return -1
     return 
 
@@ -84,23 +94,21 @@ def jgz(cmd, cmds, index):
     r = register[cmd[VALUE]]
     if r[VALUE] > 0:
         if RepresentsInt(cmd[1]):
-            print(index + int(cmd[1]), index, int(cmd[1]))
+            #print(index + int(cmd[1]), index, int(cmd[1]))
             offset = index+int(cmd[1])
             return parseCmd(cmds[offset], cmds, offset)    
-        print(index + register[cmd[1]][VALUE], index, register[cmd[1]][VALUE])
+        #print(index + register[cmd[1]][VALUE], index, register[cmd[1]][VALUE])
         offset = index+register[cmd[1]][VALUE]
         return parseCmd(cmds[offset], cmds, offset)    
     return index+1
 
 def parseCmd(raw_cmd, cmds, index):
     cmds.append(raw_cmd)
-    print(raw_cmd)
     #print(raw_cmd.split(" "), raw_cmd.split(" ")[1:][VALUE])
     r = raw_cmd.split(" ")[1]
     if not r in register.keys():
         print("Create registry for", r)
         register[r] = [0, 0]
-
     if "snd" in raw_cmd:
         snd(raw_cmd.split(" ")[1:])
     if "set" in raw_cmd:
@@ -120,28 +128,34 @@ def parseCmd(raw_cmd, cmds, index):
 
 def solveA():
     global register
-    cmds = []
-    raw_cmds = input.split("\n")
-    print("Init cmds")
-    for raw_cmd in raw_cmds:
-        cmds.append(raw_cmd)
-        r = raw_cmd.split(" ")[1]
-        if not r in register.keys():
-            print("Create registry for", r)
-            register[r] = [0, 0]
-        #print("Register:", register)
+    global CMDS
+    register = {}
+    CMDS = []
+    initRegistry()
 
     index = 0
-    print("Execute:")
     while True:
-        print(register)
-        index = parseCmd(cmds[index], cmds, index)
+        index = parseCmd(CMDS[index], CMDS, index)
         if index == -1:
             break
 
-    print("A:")
-
 def solveB():
+    global register
+    global CMDS
+    register = {}
+    CMDS = []
+
+    initRegistry()
+
+    indexA = 0
+    indexB = 0
+    print("Execute:")
+#    while True:
+#        indexA = parseCmd(CMDS[indexA], CMDS, indexA)
+#        indexB = parseCmd(CMDS[indexB], CMDS, indexB)
+#        if index == -1:
+#            break
+
     print("B:")
 
 if __name__ == '__main__':
