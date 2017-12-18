@@ -92,7 +92,14 @@ def rcv(cmd):
 
 def jgz(cmd, cmds, index):
     r = register[cmd[VALUE]]
-    if r[VALUE] > 0:
+
+    val = 0    
+    if RepresentsInt(cmd[VALUE]):
+        val = int(cmd[VALUE])
+    else:
+        val = register[cmd[VALUE]][0]
+
+    if val > 0:
         if RepresentsInt(cmd[1]):
             #print(index + int(cmd[1]), index, int(cmd[1]))
             offset = index+int(cmd[1])
@@ -139,29 +146,9 @@ def solveA():
         if index == -1:
             break
 
-def solveB():
-    global register
-    global CMDS
-    register = {}
-    CMDS = []
-
-    initRegistry()
-
-    indexA = 0
-    indexB = 0
-    print("Execute:")
-    while True:
-        indexA = parseCmd(CMDS[indexA], CMDS, indexA)
-        indexB = parseCmd(CMDS[indexB], CMDS, indexB)
-        if index == -1:
-            break
-
-    print("B:")
-
 if __name__ == '__main__':
     print("\n")
     solveA()
-    solveB()
 
     print("\n************\nFinished: " + task)
     sys.exit(1)

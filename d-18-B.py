@@ -9,8 +9,8 @@ import re
 
 #
 
+#task="d-18"
 task="d-18"
-#task="d-18-B.1"
 infile=task + ".input"
 
 with open('input/' + infile) as file:
@@ -38,8 +38,10 @@ def initCommands():
 def initRegistry(registry):
     for raw_cmd in CMDS:
         r = raw_cmd.split(" ")[1]
-        if not r in registry.keys():
-            registry[r] = [0, 0]
+        if not RepresentsInt(r):
+            if not r in registry.keys():
+#                print("Add key", r)
+                registry[r] = [0, 0]
 
 def RepresentsInt(s):
     try: 
@@ -50,7 +52,6 @@ def RepresentsInt(s):
 
 def snd(cmd, registry, id):
     global COUNT_PRG1
-    print(cmd)
     val = 0
     if RepresentsInt(cmd[0]):
         val = cmd[0]
@@ -93,7 +94,7 @@ def rcv(cmd, index, registry, id):
         val = q.pop()
         QUEUE["B"] = q
         B_WAITING = False
-    print(r, cmd[VALUE], val)
+#    print(r, cmd[VALUE], val)
     registry[cmd[VALUE]] = [val, 0]
     return index + 1, registry
 
@@ -139,9 +140,15 @@ def mod(cmd, registry):
     return registry
 
 def jgz(cmd, cmds, index, registry, id):
-    r = registry[cmd[VALUE]]
-    print(r[VALUE])
-    if r[VALUE] > 0:
+    #print("wtf", cmd,  cmd[VALUE])
+
+    val = 0    
+    if RepresentsInt(cmd[VALUE]):
+        val = int(cmd[VALUE])
+    else:
+        val = registry[cmd[VALUE]][0]
+
+    if val > 0:
         if RepresentsInt(cmd[1]):
             offset = index+int(cmd[1])
             return parseCmd(cmds[offset], cmds, offset, registry, id)    
@@ -152,9 +159,7 @@ def jgz(cmd, cmds, index, registry, id):
 def parseCmd(raw_cmd, cmds, index, registry, id):
     cmds.append(raw_cmd)
     r = raw_cmd.split(" ")[1]
-    if not r in registry.keys():
-        print("Create registry for", r)
-        registry[r] = [0, 0]
+
     if "snd" in raw_cmd:
         snd(raw_cmd.split(" ")[1:], registry, id)
     if "set" in raw_cmd:
@@ -174,23 +179,26 @@ def parseCmd(raw_cmd, cmds, index, registry, id):
 def solveB():
     global registry
     global CMDS
+
     registryA = {}
     registryB = {}
+    
     CMDS = []
     queue = {"A":Queue(), "B":Queue()}
 
     initCommands()
     initRegistry(registryA)
+    registryA["p"] = [0, 0]
     initRegistry(registryB)
+    registryB["p"] = [1, 0]
 
 
     indexA = 0
     indexB = 0
     i = 0
-    print("Execute:")
     while True:
         indexA, registryA = parseCmd(CMDS[indexA], CMDS, indexA, registryA, "A")
-        indexB, registryB  = parseCmd(CMDS[indexB], CMDS, indexB, registryB, "B")
+        indexB, registryB = parseCmd(CMDS[indexB], CMDS, indexB, registryB, "B")
         i += 1
 #        if i == 8:
 #            break
@@ -198,6 +206,8 @@ def solveB():
         if A_WAITING and B_WAITING:
             break
 
+    print("ra", registryA)
+    print("rb", registryB)
     print("B:", COUNT_PRG1)
 
 if __name__ == '__main__':

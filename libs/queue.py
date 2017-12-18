@@ -11,12 +11,12 @@ class Queue:
          return self.items == []
 
      def push(self, item):
-         print("Push item:", item)
+         #print("Push item:", item)
          self.items.insert(0, item)
 
      def pop(self):
          item = self.items.pop()
-         print("Pop item:", item)
+         #print("Pop item:", item)
          return item
 
      def peek(self):
