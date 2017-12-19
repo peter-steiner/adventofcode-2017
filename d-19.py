@@ -23,6 +23,7 @@ def isChar(char):
     int_val = ord(char.lower())
     return int_val > 96 and int_val < 123
     
+# Handle turning point
 def try_turn(pos):
     global DIR
     global COLLECTED
@@ -62,11 +63,18 @@ def move(pos):
         if DIR in delta:
             dx, dy = deltas.get(delta)
             pos = [x+dx, y+dy]
+            char = DIAGRAM[y][x]
+
+            if char in " ":
+                return [x, y]
+             
+            # Valid step
             if not -1 in pos and y + dy < len(DIAGRAM) and x + dx < len(DIAGRAM[0]):
                 # print(DIAGRAM[y+dy][x+dx])
                 #print("move", DIR, "from", [x, y], "to", pos)
                 if isChar(DIAGRAM[y+dy][x+dx]):
                     COLLECTED += DIAGRAM[y+dy][x+dx]
+                # Turn if possible as next step
                 x, y = try_turn(pos)
                 pos = [x, y]
     return pos
