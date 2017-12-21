@@ -18,6 +18,7 @@ DIR = "D"
 DIR_IND = {'U': "|", 'D': "|", 'R':"-", 'L':"-"}
 deltas = {'U': (0, -1), 'D': (0, 1), 'R':(1, 0), 'L':(-1, 0)}
 COLLECTED = ""
+STEPS = 0
 
 def isChar(char):
     int_val = ord(char.lower())
@@ -27,6 +28,7 @@ def isChar(char):
 def try_turn(pos):
     global DIR
     global COLLECTED
+    global STEPS
 
     x, y = pos
     path = DIAGRAM[y][x]
@@ -38,6 +40,7 @@ def try_turn(pos):
                     npos = DIAGRAM[y+dy][x+dx]
                     if npos in "-" or isChar(npos):
                         DIR = delta
+                        STEPS += 1
                         # print("turn", DIR)
                         if isChar(DIAGRAM[y+dy][x+dx]):
                             COLLECTED += DIAGRAM[y+dy][x+dx]
@@ -48,6 +51,7 @@ def try_turn(pos):
                     npos = DIAGRAM[y+dy][x+dx]
                     if npos in "|" or isChar(npos):
                         DIR = delta
+                        STEPS += 1
                         # print("turn", DIR)
                         if isChar(DIAGRAM[y+dy][x+dx]):
                             COLLECTED += DIAGRAM[y+dy][x+dx]
@@ -56,6 +60,7 @@ def try_turn(pos):
 
 def move(pos):
     global COLLECTED
+    global STEPS
 
     x, y = pos
 #    print("stepped on to", DIAGRAM[y][x])
@@ -67,13 +72,14 @@ def move(pos):
 
             if char in " ":
                 return [x, y]
-             
+
             # Valid step
             if not -1 in pos and y + dy < len(DIAGRAM) and x + dx < len(DIAGRAM[0]):
                 # print(DIAGRAM[y+dy][x+dx])
                 #print("move", DIR, "from", [x, y], "to", pos)
                 if isChar(DIAGRAM[y+dy][x+dx]):
                     COLLECTED += DIAGRAM[y+dy][x+dx]
+                STEPS += 1
                 # Turn if possible as next step
                 x, y = try_turn(pos)
                 pos = [x, y]
@@ -108,9 +114,7 @@ def solveA():
             break
         
         
-    print(COLLECTED, len(COLLECTED))
-    print(chars, len(chars))
-    # wrong FEZDNIVJWTVINDZEF
+    print(COLLECTED, len(COLLECTED), STEPS)
 
 if __name__ == '__main__':
     print("\n")
