@@ -29,13 +29,12 @@ class Particle:
         self.prev_distance = self.distance()
 
     def point_as_string(self):
-        return "".join(str(i) for i in self.loc)
+        return ",".join(str(i) for i in self.loc)
 
     def tick(self):
         acc = self.acc
-        # accelrate and calc new position
         for i in range(3):
-            self.vel[i] += acc[i] 
+            self.vel[i] += self.acc[i] 
             self.loc[i] += self.vel[i]
 
     def location(self):
@@ -47,8 +46,30 @@ class Particle:
     def distance(self):
         return sum([abs(i) for i in self.loc])
 
+    def __eq__(self, other): 
+        return self.__dict__ == other.__dict__
+
     def __str__(self):
         return "[{0}]:|{1}| loc: {2}, vel: {3}, acc: {4}".format(self.id, self.distance(), self.loc, self.vel, self.acc)
+
+def removeDuplicates(particles):
+    points = {}
+    for p in particles:
+        if p.point_as_string() in points.keys():
+            points[p.point_as_string()] += 1
+        else: 
+            points[p.point_as_string()] = 1
+
+    i = 0
+    toRemove = []
+    for p in particles:
+        if p.point_as_string() in points.keys() and points[p.point_as_string()] > 1:
+            toRemove.append(p)
+            i += 1
+
+    for r in toRemove:
+        particles.remove(r)    
+    return particles
 
 def solveA():
     rows = input.split("\n")
@@ -57,40 +78,21 @@ def solveA():
     i = 0
     print(len(rows))
     for row in rows:
-        # print(row)
         m = re.findall('(-*\d+,-*\d+,-*\d+)', row, re.DOTALL)
         c, v, a = m
         p = Particle(i, c, v, a)
         particles.append(p)
         i += 1
 
-    print(len(particles))
-    points = []
-    for p in particles:
-        if p.point_as_string() in points:
-            particles.remove(p)
-        else: 
-            points.append(p.point_as_string())
+    particles = removeDuplicates(particles)
+    print("patricles #", len(particles))
+
     i = 0
-    while i < 1000:
-        c = 0
-        points = [p.point_as_string() for p in particles]
+    while i < 10000:
         for p in particles:
-            
-            distance = p.distance()
             p.tick()
-            trend = p.trend()
-
+        particles = removeDuplicates(particles)
         i += 1
-        ids = []
-        for key, value in points.items():
-            if len(value) > 1:
-                print(value)
-                ids += value 
-
-        for p in particles:
-            if p.id in ids:
-                particles.remove(p)
 
     target_particle = None
     min = sys.maxsize
@@ -101,8 +103,6 @@ def solveA():
 
     print(i, "iterations", len(particles))
     print("Particel min distance", target_particle)
-
-    print("A")
 
 if __name__ == '__main__':
     print("\n")
