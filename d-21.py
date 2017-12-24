@@ -19,6 +19,28 @@ class Rule:
     p_from = ""
     p_to = ""
 
+    def match(self, painting):
+        rows = self.rowsFromString(painting)
+        length = len(rows)
+        pdh_arr = []
+        for row in rows:
+            r = "".join(row)
+            d, h = r.count("."), r.count("#") 
+            pdh_arr.append(sorted([d, h]))
+            print(d, h)
+
+        rows = self.rowsFromString(painting)
+        length = len(rows)
+        rule_arr = []
+        for row in self.p_from:
+            r = "".join(row)
+            d, h = r.count("."), r.count("#") 
+            rule_arr.append(sorted([d, h]))
+            print(d, h)
+            
+    def rowsFromString(self, painting):
+        return painting.split("/")
+
     def __init__(self, pfrom, pto):
         p_from = pfrom
         p_to = pto
@@ -33,11 +55,20 @@ def solveA():
     rows = input.split("\n")
     rules = []
 
+    painting = ".#./..#/###"
+
     for row in rows:
-        print(row.split("=>"))
+        # print(row.split("=>"))
         f, t = row.split(" => ")
         r = Rule(f, t)
         rules.append(r)
+
+    rows = painting.split("/")
+    for it in range(5):
+        if len(rows)%2 == 0:        
+
+        if len(rows)%3 == 0:        
+
 
     print("Rules #", len(rules))
     print("a")
