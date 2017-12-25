@@ -82,6 +82,7 @@ def jnz(cmd, cmds, index, registry, id):
     if RepresentsInt(cmd[VALUE]):
         val = int(cmd[VALUE])
     else:
+        # print(VALUE, [cmd[VALUE]], registry[cmd[VALUE]])
         val = registry[cmd[VALUE]][0]
 
     if val != 0:
@@ -127,9 +128,43 @@ def solveA():
 
     print("23 A", mul_count)
 
+def bajs():
+
+    szar = 0
+    i = 109900
+    while i <= 126900:
+        if i % 2 == 0:
+            szar += 1
+        i += 17
+    print(szar)
+
+def solveB():
+    global CMDS
+    
+    CMDS = []
+    registryA = {}
+    initCommands()
+    initRegistry(registryA)
+
+    registryA["a"] = [1, 0]
+
+    max_index = len(CMDS)
+    index = 0
+    i = 0
+    while True:
+        index, registryA = parseCmd(CMDS[index], CMDS, index, registryA, "A")
+        # print(index)
+        print("index", index, registryA)
+        if index >= max_index or i == 28:
+            break
+        i += 1
+    print("23 A", mul_count, registryA["h"])
+
+
 if __name__ == '__main__':
     print("\n")
-    solveA()
+    solveB()
+    bajs()
 
     print("\n************\nFinished: " + task)
     sys.exit(1)
